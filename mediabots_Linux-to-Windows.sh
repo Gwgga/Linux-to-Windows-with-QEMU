@@ -32,20 +32,16 @@ fi
 sudo ln -s /usr/bin/genisoimage /usr/bin/mkisofs
 # Downloading resources
 sudo mkdir /mediabots /floppy /virtio
-link1_status=$(curl -Is http://51.15.226.83/WS2012R2.ISO | grep HTTP | cut -f2 -d" ")
-link2_status=$(curl -Is https://ia601506.us.archive.org/4/items/WS2012R2/WS2012R2.ISO | grep HTTP | cut -f2 -d" ")
-#sudo wget -P /mediabots https://archive.org/download/WS2012R2/WS2012R2.ISO # Windows Server 2012 R2 
+link1_status=$(curl -Is https://ia600802.us.archive.org/20/items/Windows10LiteEditionX8615063.4832017Mshaz1000/Windows%2010%20Lite%20Edition%20X86%2015063.483%202017%20mshaz1000.iso | grep HTTP | cut -f2 -d" ")
 if [ $link1_status = "200" ] ; then 
-	sudo wget -P /mediabots http://51.15.226.83/WS2012R2.ISO
-elif [ $link2_status = "200" ] ; then 
-	sudo wget -P /mediabots https://ia601506.us.archive.org/4/items/WS2012R2/WS2012R2.ISO
+	sudo wget -P /mediabots wget --no-check-certificate -r 'https://ia600802.us.archive.org/20/items/Windows10LiteEditionX8615063.4832017Mshaz1000/Windows%2010%20Lite%20Edition%20X86%2015063.483%202017%20mshaz1000.iso' -O WS2012R2.ISO
 else
-	echo -e "${RED}[Error]${NC} ${YELLOW}Sorry! None of Windows OS image urls are available , please report about this issue on Github page : ${NC}https://github.com/mediabots/Linux-to-Windows-with-QEMU"
+	echo -e "${RED}[Error]${NC} ${YELLOW}Sorry! None of Windows OS image urls are available , please report about this issue on Github page : ${NC}https://github.com/gwgga/Linux-to-Windows-with-QEMU"
 	echo "Exiting.."
 	sleep 30
 	exit 1
 fi
-sudo wget -P /floppy https://ftp.mozilla.org/pub/firefox/releases/64.0/win32/en-US/Firefox%20Setup%2064.0.exe
+sudo wget -P /floppy https://ftp.mozilla.org/pub/firefox/releases/66.0/win32/pt-BR/Firefox%20Setup%2066.0.exe
 sudo mv /floppy/'Firefox Setup 64.0.exe' /floppy/Firefox.exe
 sudo wget -P /floppy https://downloadmirror.intel.com/23073/eng/PROWinx64.exe # Intel Network Adapter for Windows Server 2012 R2 
 # Powershell script to auto enable remote desktop for administrator
@@ -84,9 +80,9 @@ firstDisk=$(fdisk -l | grep "Disk /dev/" | head -1 | cut -f1 -d":" | cut -f2 -d"
 freeDisk=$(df | grep "^/dev/" | awk '{print$1 " " $4}' | sort -g -k 2 | tail -1 | cut -f2 -d" ")
 # Windows required at least 25 GB free disk space
 firstDiskLow=0
-if [ $(expr $freeDisk / 1024 / 1024 ) -ge 25 ]; then
+if [ $(expr $freeDisk / 1024 / 1024 ) -ge 10 ]; then
 	newDisk=$(expr $freeDisk \* 90 / 100 / 1024)
-	if [ $(expr $newDisk / 1024 ) -lt 25 ] ; then newDisk=25600 ; fi
+	if [ $(expr $newDisk / 1024 ) -lt 10 ] ; then newDisk=5600 ; fi
 else
 	firstDiskLow=1
 fi
@@ -109,7 +105,7 @@ else
 	#b=($(fdisk -l | grep "^/dev/" | tr -d "*" | tr -s '[:space:]' | cut -f1 -d" "))
 fi
 if [ $diskNumbers -eq 1 ] ; then # opened 1st if
-if [ $availableRAM -ge 4650 ] ; then # opened 2nd if
+if [ $availableRAM -ge 1024 ] ; then # opened 2nd if
 	echo -e "${BLUE}For below option pass${NC} yes ${BLUE}iff, your VPS/Server came with${NC} boot system in ${NC}${RED}'RESCUE'${NC} mode ${BLUE}feature${NC}"
 	read -r -p "Do you want to completely delete your current Linux O.S.? (yes/no) : " deleteLinux
 	deleteLinux=$(echo "$deleteLinux" | head -c 1)
@@ -179,7 +175,7 @@ else
 	fi
 fi # 2nd if closed
 else # 1st if else
-if [ $availableRAM -ge 4650 ] ; then
+if [ $availableRAM -ge 1024 ] ; then
 	read -r -p "Do you want to completely delete your current Linux O.S.? (yes/no) : " deleteLinux
 	deleteLinux=$(echo "$deleteLinux" | head -c 1)
 	if [ ! -z $deleteLinux ] && [ $deleteLinux = 'Y' -o $deleteLinux = 'y' ] ; then
@@ -285,7 +281,7 @@ else
 echo "Job Done :)"
 fi
 else
-echo "Windows OS required at least 25GB free desk space. Your Server/VPS does't have 25GB free space!"
+echo "Windows OS required at least 10GB free desk space. Your Server/VPS does't have 10GB free space!"
 echo "Exiting....."
 fi
 fi
