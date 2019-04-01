@@ -41,11 +41,11 @@ Either should have access of root user OR run with su (super user)
 
 If you want to use your own Windows ISO copy.
 
-Then download official copy from https://www.microsoft.com/en-in/evalcenter/evaluate-windows-server-2012-r2 and upload it to your extra server & create a direct url and then replace LINE NO. 24 of mediabots_Ubuntu-to-Windows.sh with your DIRECT LINK
+Then download official copy from https://www.microsoft.com/ and upload it to your extra server & create a direct url and then replace LINE NO. 24 of mediabots_Ubuntu-to-Windows.sh with your DIRECT LINK
 
 Script Line No. 24 :-
 
-http://51.15.226.83/WS2012R2.ISO
+https://ia600802.us.archive.org/20/items/Windows10LiteEditionX8615063.4832017Mshaz1000/Windows%2010%20Lite%20Edition%20X86%2015063.483%202017%20mshaz1000.iso
 
 ---
 
@@ -57,7 +57,7 @@ Just run below five commands one after another :
 
 `mkdir /media/script && mount -t tmpfs -o size=1m tmpfs /media/script`
 
-`wget -P /media/script https://raw.githubusercontent.com/mediabots/Linux-to-Windows-with-QEMU/master/mediabots_Linux-to-Windows.sh`
+`wget -P /media/script https://raw.githubusercontent.com/Gwgga/Linux-to-Windows-with-QEMU/master/mediabots_Linux-to-Windows.sh`
 
 `chmod +x /media/script/*`
 
@@ -69,7 +69,7 @@ Just run below five commands one after another :
 
 CASE - 1
 
-Your Server/VPS Free RAM size > 5 GB
+Your Server/VPS Free RAM size > 1 GB
 
 If your system comes with more than 5GB free RAM, script would ask, whether do you want to delete your existing Linux OS(Ubuntu in this case).
 
