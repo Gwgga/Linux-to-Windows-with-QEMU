@@ -1,6 +1,6 @@
 # Linux-to-Windows-with-QEMU
 
-A Shell Script to Auto install Windows Server on your Linux System. [Right now, it supports 2012 R2 < evaluation/180 days trial > copy]
+A Shell Script to Auto install Windows Server on your Linux System. [Right now, it supports W10 < evaluation/180 days trial > copy]
 
 Script would use QEMU-KVM portable software for Virtualization purpose.
 Since QEMU is a portable s/w, so it can reside in temporary RAM.
@@ -93,9 +93,9 @@ Go with that option only if "Rescue Boot" option is available in your Server Hos
    
    Case - 1.b.ii
    
-   If only one Disk attached, then it would check how many partitions(size > 25 GB) are present there.
+   If only one Disk attached, then it would check how many partitions(size > 10 GB) are present there.
    
-   If there are multi partitons(size > 25 GB). Windows-OS would be installed on second partition.
+   If there are multi partitons(size > 10 GB). Windows-OS would be installed on second partition.
    
    Else
    
